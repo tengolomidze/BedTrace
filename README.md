@@ -15,10 +15,11 @@
 - `python server.py`
 - Open the webpage
 
-### Bugs and Suggestions
-### Contact me on:
+### For Bugs and Suggestions contact me on:
 - Discord: #crig2181  
 - Email: tengolomidzedev@gmail.com
-
+<br/>
+<br/>
+<br/>
 ### Keywords
 bedrock patter finder, base hunting, grifing, minecraft servers, 2b2t,
