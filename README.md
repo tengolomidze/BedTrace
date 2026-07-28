@@ -11,7 +11,7 @@
 
 ### Notes
 - Works on Minecraft 1.18+
-- Supports Bedrock Gen is both overworld and nether
+- Supports Bedrock Gen in both overworld and nether
 - Uses OpenCL with GPU for ultra-fast searching
 
 ### Building
