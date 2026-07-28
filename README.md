@@ -31,4 +31,4 @@
 - Email: tengolomidzedev@gmail.com
 
 ### Keywords
-bedrock patter finder, base hunting, griefing, minecraft servers, 2b2t,
+minecraft bedrock patter finder, base hunting, griefing, minecraft servers, 2b2t,
