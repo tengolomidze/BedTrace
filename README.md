@@ -9,9 +9,15 @@
     <img src="https://img.shields.io/github/languages/code-size/tengolomidze/BedTrace" alt="GitHub code size in bytes"/>
 </div>
 
-Developer/Contact
-Developer: Tengo Lomidze  
-Discord: #crig2181  
-Email: tengolomidzedev@gmail.com
+### Building
+- Clone this repository
+- `pip install -r requirements.txt`
+- `python server.py`
+- Open the webpage
+
+## Bugs and Suggestions
+### Contact me on:
+- Discord: #crig2181  
+- Email: tengolomidzedev@gmail.com
 
 keywords: bedrock patter finder, base hunting, grifing, minecraft servers, 2b2t,
