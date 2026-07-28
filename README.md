@@ -10,7 +10,8 @@
 </div>
 
 ### Building
-- Clone this repository
+- `git clone https://github.com/tengolomidze/BedTrace.git`
+- `cd BedTrace`
 - `pip install -r requirements.txt`
 - `python server.py`
 - Open webpage
