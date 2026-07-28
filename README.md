@@ -7,7 +7,6 @@
 <div align="center">
     <img src="https://img.shields.io/github/last-commit/tengolomidze/BedTrace" alt="GitHub last commit"/>
     <img src="https://img.shields.io/github/languages/code-size/tengolomidze/BedTrace" alt="GitHub code size in bytes"/>
-    <img src="https://img.shields.io/endpoint?url=https://ghloc.vercel.app/api/tengolomidze/BedTrace/badge?filter=.html .css .js .cpp .cl .py$&label=lines%20of%20code&color=blue" alt="GitHub lines of code"/>
 </div>
 
 Developer/Contact
