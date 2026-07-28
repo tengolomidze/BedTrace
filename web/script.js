@@ -14,7 +14,7 @@ let blocks = [];
 let currentBlockType = 1;
 let gridSize = 16;
 
-let searchSeed = 0;
+let searchSeed = "0";
 let searchRadius = 1000000;
 let searchTiles = 4096;
 let isSearching = false;
@@ -55,7 +55,7 @@ const loadState = () => {
             z: state.position?.z ?? 35,
         };
         blocks = (state.blocks || []).map((b) => new Block(b.x ?? 0, b.y ?? -60, b.z ?? 0, b.type ?? 1));
-        searchSeed = state.searchSeed ?? 0;
+        searchSeed = state.searchSeed ?? "0";
         searchRadius = state.searchRadius ?? 1000000;
         searchTiles = state.searchTiles ?? 4096;
         worldI = state.worldI ?? 0;
@@ -65,7 +65,7 @@ const saveState = () => {
     localStorage.setItem('bedtraceState', JSON.stringify({ blocks, scale, position, searchSeed, searchRadius, searchTiles, worldI }));
 };
 loadState();
-setInterval(saveState, 1000);
+setInterval(saveState, 500);
 
 const clearAllBlocks = () => {
     if (blocks.length === 0) return;
@@ -92,7 +92,6 @@ const updateButtonStates = () => {
 };
 updateButtonStates();
 window.addEventListener("keyup", function (e) {
-    console.log(e.code)
     if (e.code === "Digit1")
         currentBlockType = 0;
     if (e.code === "Digit2")
@@ -191,22 +190,19 @@ setTimeout(() => {
     if (searchSeedInput) {
         searchSeedInput.value = searchSeed;
         searchSeedInput.addEventListener('change', () => {
-            searchSeed = parseInt(searchSeedInput.value) || 0;
-            saveState();
+            searchSeed = searchSeedInput.value;
         });
     }
     if (searchRadiusInput) {
         searchRadiusInput.value = searchRadius;
         searchRadiusInput.addEventListener('change', () => {
             searchRadius = parseInt(searchRadiusInput.value) || 1000000;
-            saveState();
         });
     }
     if (searchTilesInput) {
         searchTilesInput.value = searchTiles;
         searchTilesInput.addEventListener('change', () => {
             searchTiles = parseInt(searchTilesInput.value) || 4096;
-            saveState();
         });
     }
 }, 0);
@@ -336,7 +332,6 @@ const performSearch = () => {
     disableControls();
     consoleOutput.innerHTML = '';
     resetProgress();
-
     const payload = {
         action: 'run',
         seed: searchSeed,
