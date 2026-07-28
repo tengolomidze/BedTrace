@@ -20,10 +20,10 @@
 <table>
 <tr>
 <td>
-<img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/2.png?raw=true" alt="bedtrace-logo" width="100%"/>
+<img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/1.png?raw=true" alt="bedtrace-logo" width="100%"/>
 </td>
 <td>
-<img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/1.png?raw=true" alt="bedtrace-logo" width="100%"/>
+<img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/2.png?raw=true" alt="bedtrace-logo" width="100%"/>
 </td>
 </tr>
 </table>
