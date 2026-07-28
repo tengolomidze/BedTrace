@@ -16,6 +16,11 @@
 -   `python server.py`
 - Open webpage
 
+### Example
+<p align="center">
+  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/banner.png?raw=true" alt="bedtrace-logo" width="75%"/>
+</p>
+
 ### For Bugs and Suggestions contact me on:
 - Discord: #crig2181  
 - Email: tengolomidzedev@gmail.com
