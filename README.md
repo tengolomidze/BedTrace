@@ -7,6 +7,7 @@
 <div align="center">
     <img src="https://img.shields.io/github/last-commit/tengolomidze/BedTrace" alt="GitHub last commit"/>
     <img src="https://img.shields.io/github/languages/code-size/tengolomidze/BedTrace" alt="GitHub code size in bytes"/>
+    [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 </div>
 
 Developer/Contact
