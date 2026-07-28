@@ -15,7 +15,7 @@
 - `python server.py`
 - Open the webpage
 
-## Bugs and Suggestions
+### Bugs and Suggestions
 ### Contact me on:
 - Discord: #crig2181  
 - Email: tengolomidzedev@gmail.com
