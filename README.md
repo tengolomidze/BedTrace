@@ -9,6 +9,11 @@
     <img src="https://img.shields.io/github/languages/code-size/tengolomidze/BedTrace" alt="GitHub code size in bytes"/>
 </div>
 
+### Notes
+- Works on Minecraft 1.18+
+- Supports Bedrock Gen is both overworld and nether
+- Uses OpenCL with GPU for ultra-fast searching
+
 ### Building
 -   `git clone https://github.com/tengolomidze/BedTrace.git`
 -   `cd BedTrace`
