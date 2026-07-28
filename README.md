@@ -17,9 +17,20 @@
 - Open webpage
 
 ### Example
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/1.png?raw=true" alt="bedtrace-logo" width="75%"/>
+    </td>
+  
+    <td>
+      <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/2.png?raw=true" alt="bedtrace-logo" width="75%"/>
+    </td>
+  </tr>
+</table>
+
 <p align="center" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/1.png?raw=true" alt="bedtrace-logo" width="75%"/>
-  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/2.png?raw=true" alt="bedtrace-logo" width="75%"/>
+  
 </p>
 
 ### For Bugs and Suggestions contact me on:
