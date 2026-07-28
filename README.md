@@ -18,7 +18,7 @@
 
 ### Preview
 <p align="center">
-  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/preview.jpg?raw=true" alt="bedtrace-logo" width="900%"/>
+  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/preview.jpg?raw=true" alt="bedtrace-logo" width="90%"/>
 </p>
 
 <p align="center" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
