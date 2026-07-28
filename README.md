@@ -14,7 +14,7 @@
 -   `cd BedTrace`
 -   `pip install -r requirements.txt`
 -   `python server.py`
-- Open webpage
+- Open Webpage on `http://127.0.0.1:8000`
 
 ### Preview
 <p align="center">
