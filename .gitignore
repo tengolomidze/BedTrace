@@ -1,0 +1,4 @@
+.venv
+cpp/.vs
+cpp/bedtrace/x64
+cpp/bedtrace/packages
