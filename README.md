@@ -16,7 +16,7 @@
 -   `python server.py`
 - Open webpage
 
-### Example
+### Previw
 <table>
 <tr>
 <td>
