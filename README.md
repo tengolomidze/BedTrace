@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/icon.png?raw=true" alt="bedtrace-logo" width="15%"/>
+  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/icon.png?raw=true" alt="bedtrace-logo" width="20%"/>
 </p>
 <h1 align="center">BedTrace</h1>
 <p align="center">Utility for finding bedrock patterns across whole Minecraft world.</p>
