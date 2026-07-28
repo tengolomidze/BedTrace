@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="img/icon.png">
+        <title>Bedtrace</title>
+    </head>
+
+    <body>
+        <canvas class="canvas"></canvas>
+        <div class="canvas-div">
+            <div class="instructions">
+                <strong>Controls:</strong><br>
+                Left Click: Place block<br>
+                Right Click: Remove block<br>
+                Drag: Move Screen<br>
+                Scroll: Zoom
+            </div>
+
+            <div class="world-type-abs">
+                <div class="world-type-div">
+                    <p><span class="world-type">overworld_floor</span></p>
+                    <button class="world-type-next">Change</button> 
+                    <div class="world-type-min-max">
+                        <p>min:<span class="world-type-min">60</span></p>
+                        <p>max:<span class="world-type-max">60</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="compass-and-y-level-div"">
+                <div class="y-level-div">
+                    <button class="y-level-inc">+</button>
+                    <p>y: <span class="y-level">-60</span></p>
+                    <button class="y-level-dec">-</button>
+                </div>
+
+                <div class="compass">
+                    <div>
+                        <div></div>
+                        <div style="color: rgb(166, 255, 158);">-Z</div>
+                        <div></div>
+                        <div style="color: rgb(255, 158, 158);">-X</div>
+                        <div></div>
+                        <div style="color: rgb(255, 158, 158);">+X</div>
+                        <div></div>
+                        <div style="color: rgb(166, 255, 158);">+Z</div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="best-radius-div">Enough to find in <span class="best-radius" style="color:cadetblue; font-size: 24px; font-weight: 600;">0</span> block radius</div>
+        </div>
+
+        <div class="panel">
+            <div class="tools">
+                <div class="block-picker">
+                    <button class="bedrock"><img src="img/bedrock.png"><p>1</p></button>
+                    <button class="not-bedrock"><img src="img/not_bedrock.png"><p>2</p></button>
+                </div>
+                <button class="clear-all">Clear All</button>
+                <div class="rotations">
+                    <button class="rotate-left">↺</button>
+                    <button class="rotate-right">↻</button>
+                </div>
+
+                <div class="search-inputs">
+                    <div>
+                        <label>Seed</label>
+                        <input type="number" class="search-seed" value="0">
+                    </div>
+                    <div>
+                        <label>Search Radius</label>
+                        <input type="number" class="search-radius" value="1000000">
+                    </div>
+                    <div>
+                        <label>Tiles Size <span style="font-size: 8px;">(Chunk size in a single thread)</span></label>
+                        <input type="number" class="search-tiles" value="4096">
+                    </div>
+                    <div>
+                        <button class="search-btn">Search</button>
+                        <button class="stop-btn" style="display: none;">Stop</button>
+                    </div>
+                </div>
+
+                <div class="search-console">
+                    <div class="console-header">Console</div>
+                    <div class="progress-section" style="display: none;">
+                        <div class="progress-label">Progress</div>
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                        <div class="progress-text">0%</div>
+                    </div>
+                    <div class="console-output"></div>
+                </div>
+
+                <div class="credentials">
+                    <div class="cred-item">
+                        <span class="cred-label">Developer:</span>
+                        <span class="cred-value">Tengo Lomidze</span>
+                    </div>
+                    <div class="cred-item">
+                        <span class="cred-label">Discord:</span>
+                        <span class="cred-value">#crig2181</span>
+                    </div>
+                    <div class="cred-item">
+                        <span class="cred-label">Mail:</span>
+                        <span class="cred-value">tengolomidzedev@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    
+    <script src="script.js"></script>
+</html>
