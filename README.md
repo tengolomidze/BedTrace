@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/icon.png?raw=true" alt="bedtrace-logo" width="15%"/>
+  <img src="https://github.com/tengolomidze/BedTrace/blob/main/web/img/icon.png?raw=true" alt="bedtrace-logo" width="20%"/>
 </p>
 <h1 align="center">BedTrace</h1>
 <p align="center">Utility for finding bedrock patterns across whole Minecraft world.</p>
@@ -35,4 +35,4 @@ ETH: 0x685294a81ce6ec37d4d8c43fbd95a3c80da8a046
 BTC: bc1qus2wq2j53hnx7w2227xfc3tnatjrchczawjqx3
 
 ### Keywords
-bedrock patter finder, base hunting, griefing, minecraft servers, 2b2t,
+minecraft bedrock patter finder, base hunting, griefing, minecraft servers, 2b2t,
