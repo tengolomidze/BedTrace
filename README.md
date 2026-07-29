@@ -31,8 +31,8 @@
 - Email: tengolomidzedev@gmail.com
 
 ### Support
-ETH: 0x685294a81ce6ec37d4d8c43fbd95a3c80da8a046
-BTC: bc1qus2wq2j53hnx7w2227xfc3tnatjrchczawjqx3
+- ETH: 0x685294a81ce6ec37d4d8c43fbd95a3c80da8a046
+- BTC: bc1qus2wq2j53hnx7w2227xfc3tnatjrchczawjqx3
 
 ### Keywords
 minecraft bedrock patter finder, base hunting, griefing, minecraft servers, 2b2t,
