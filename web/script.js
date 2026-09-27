@@ -1,25 +1,25 @@
-const canvas = document.querySelector(".canvas");
-const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("canvas")
+const ctx = canvas.getContext("2d")
 
-let bedrockImage = new Image();
-bedrockImage.src = 'img/bedrock.png';
-let notBedrockImage = new Image();
-notBedrockImage.src = 'img/not_bedrock.png';
+let bedrockImage = new Image()
+bedrockImage.src = 'img/bedrock.png'
+let notBedrockImage = new Image()
+notBedrockImage.src = 'img/not_bedrock.png'
 
-let zoomStrength = 1.1;
+let ZOOM_STRENGTH = 1.1
+let GRID_SIZE = 32
 
-let scale = 75;
-let position = { x: 35, y: -60, z: 35 };
-let blocks = [];
-let currentBlockType = 1;
-let gridSize = 16;
+let scale = 75
+let position = { x: 35, y: -60, z: 35 }
+let blocks = []
+let currentBlockType = 1
 
-let searchSeed = "0";
-let searchRadius = 1000000;
-let searchTiles = 4096;
-let isSearching = false;
+let searchSeed = "0"
+let searchRadius = 1000000
+let searchTiles = 4096
+let isSearching = false
 
-let worldI = 0
+let worldIndex = 0
 let worlds = [{
     lower: -64,
     upper: -59,
@@ -36,119 +36,139 @@ let worlds = [{
 
 class Block {
     constructor(x, y, z, type) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.type = type; // Bedrock - 0, Not Bedrock - 1
+        this.x = x
+        this.y = y
+        this.z = z
+        this.type = type // Bedrock - 0, Not Bedrock - 1
     }
 }
 
 //STATE SAVE LOGIC
-const loadState = () => {
-    const saved = localStorage.getItem('bedtraceState');
+function loadState () {
+    const saved = localStorage.getItem('bedtraceState')
     if (saved) {
-        const state = JSON.parse(saved);
-        scale = state.scale || 75;
+        const state = JSON.parse(saved)
+
+        scale = state.scale ?? 75
         position = {
             x: state.position?.x ?? 35,
             y: state.position?.y ?? -60,
             z: state.position?.z ?? 35,
-        };
-        blocks = (state.blocks || []).map((b) => new Block(b.x ?? 0, b.y ?? -60, b.z ?? 0, b.type ?? 1));
-        searchSeed = state.searchSeed ?? "0";
-        searchRadius = state.searchRadius ?? 1000000;
-        searchTiles = state.searchTiles ?? 4096;
-        worldI = state.worldI ?? 0;
+        }
+        blocks = (state.blocks || []).map((b) => new Block(b.x ?? 0, b.y ?? -60, b.z ?? 0, b.type ?? 1))
+        searchSeed = state.searchSeed ?? "0"
+        searchRadius = state.searchRadius ?? 1000000
+        searchTiles = state.searchTiles ?? 4096
+        worldIndex = state.worldIndex ?? 0
     }
-};
-const saveState = () => {
-    localStorage.setItem('bedtraceState', JSON.stringify({ blocks, scale, position, searchSeed, searchRadius, searchTiles, worldI }));
-};
-loadState();
-setInterval(saveState, 500);
+}
+const saveState = () => localStorage.setItem('bedtraceState', JSON.stringify({ blocks, scale, position, searchSeed, searchRadius, searchTiles, worldIndex }))
 
-const clearAllBlocks = () => {
-    if (blocks.length === 0) return;
-    if (confirm('Are you sure you want to clear all the blocks?')) 
-        blocks = [];
+loadState();
+setInterval(saveState, 500)
+
+function clearAllBlocks () {
+    if (blocks.length === 0) 
+        return true
+    if (confirm('Are you sure you want to clear all the blocks?') === true) {
+        blocks = []
+        return true
+    }
+    return false
 }
 
 //BLOCK TYPE TOGGLE LOGIC
-const bedrockBtn = document.querySelector('.bedrock');
-const notBedrockBtn = document.querySelector('.not-bedrock');
-bedrockBtn.addEventListener('click', () => {
-    currentBlockType = 0;
-    updateButtonStates();
-});
-notBedrockBtn.addEventListener('click', () => {
-    currentBlockType = 1;
-    updateButtonStates();
-});
+const bedrockButton = document.getElementById('bedrock')
+const notBedrockButton = document.getElementById('not-bedrock')
+bedrockButton.addEventListener('click', () => {
+    currentBlockType = 0
+    updateButtonStates()
+})
+notBedrockButton.addEventListener('click', () => {
+    currentBlockType = 1
+    updateButtonStates()
+})
 const updateButtonStates = () => {
-    bedrockBtn.classList.remove('active');
-    notBedrockBtn.classList.remove('active');
-    if (currentBlockType === 0) bedrockBtn.classList.add('active');
-    else if (currentBlockType === 1) notBedrockBtn.classList.add('active');
-};
-updateButtonStates();
+    bedrockButton.classList.remove('active')
+    notBedrockButton.classList.remove('active')
+    if (currentBlockType === 0) bedrockButton.classList.add('active')
+    else if (currentBlockType === 1) notBedrockButton.classList.add('active')
+}
+updateButtonStates()
 window.addEventListener("keyup", function (e) {
     if (e.code === "Digit1")
-        currentBlockType = 0;
+        currentBlockType = 0
     if (e.code === "Digit2")
-        currentBlockType = 1;
+        currentBlockType = 1
     updateButtonStates()
-});
+})
 
 
-const clearAllBtn = document.querySelector('.clear-all');
-clearAllBtn.addEventListener('click', clearAllBlocks);
+const clearAllButton = document.getElementById('clear-all')
+clearAllButton.addEventListener('click', clearAllBlocks)
 
-const yLevelSpan = document.querySelector('.y-level');
-yLevelSpan.textContent = position.y;
-const increaseYLevel = () => {
-    if(position.y >= worlds[worldI].upper-1) return
-    position.y++;
-    yLevelSpan.textContent = position.y;
+function updateYLevelButtonState() {
+    if(position.y >= worlds[worldIndex].upper-1)
+        increaseYLevelButton.disabled = true
+    else
+        increaseYLevelButton.disabled = false
+
+    if(position.y <= worlds[worldIndex].lower+1)
+        decreaseYLevelButton.disabled = true
+    else
+        decreaseYLevelButton.disabled = false
 }
-const deceraseYLevel = () => {
-    if(position.y <= worlds[worldI].lower+1) return
-    position.y--;
-    yLevelSpan.textContent = position.y;
+function increaseYLevel () {
+    if(position.y >= worlds[worldIndex].upper-1) return
+    position.y++
+    yLevelSpan.textContent = position.y
+    updateYLevelButtonState()
 }
-const changeYLevel = (y) => {
-    if(y <= worlds[worldI].lower) return
-    if(y >= worlds[worldI].upper) return
-    position.y = y;
-    yLevelSpan.textContent = y;
+function deceraseYLevel () {
+    if(position.y <= worlds[worldIndex].lower+1) return
+    position.y--
+    yLevelSpan.textContent = position.y
+    updateYLevelButtonState()
 }
-setTimeout(() => {
-    const increase = document.querySelector('.y-level-inc');
-    const decrease = document.querySelector('.y-level-dec');
-    if (increase) increase.addEventListener('click', increaseYLevel);
-    if (decrease) decrease.addEventListener('click', deceraseYLevel);
-}, 0);
+function changeYLevel (y) {
+    if(y <= worlds[worldIndex].lower) return
+    if(y >= worlds[worldIndex].upper) return
+    position.y = y
+    yLevelSpan.textContent = y
+    updateYLevelButtonState()
+}
+const yLevelSpan = document.getElementById('y-level')
+yLevelSpan.textContent = position.y
+const increaseYLevelButton = document.getElementById('y-level-inc')
+const decreaseYLevelButton = document.getElementById('y-level-dec')
+increaseYLevelButton.addEventListener('click', increaseYLevel)
+decreaseYLevelButton.addEventListener('click', deceraseYLevel)
+updateYLevelButtonState()
 
-const worldTypeSpan = document.querySelector('.world-type');
-const worldTypeMinSpan = document.querySelector('.world-type-min');
-const worldTypeMaxSpan = document.querySelector('.world-type-max');
 
-worldTypeSpan.textContent = worlds[worldI].name
-worldTypeMinSpan.textContent = worlds[worldI].lower+1
-worldTypeMaxSpan.textContent =  worlds[worldI].upper-1
+const worldTypeSpan = document.getElementById('world-type')
+const worldTypeMinSpan = document.getElementById('world-type-min')
+const worldTypeMaxSpan = document.getElementById('world-type-max')
+worldTypeSpan.textContent = worlds[worldIndex].name
+worldTypeMinSpan.textContent = worlds[worldIndex].lower+1
+worldTypeMaxSpan.textContent =  worlds[worldIndex].upper-1
 
 const nextWorld = () => {
     if(isSearching) return
-    if(worldI == worlds.length - 1) worldI = 0
-    else worldI++
-    worldTypeSpan.textContent = worlds[worldI].name
-    worldTypeMinSpan.textContent = worlds[worldI].lower+1
-    worldTypeMaxSpan.textContent =  worlds[worldI].upper-1
 
-    changeYLevel(worlds[worldI].upper - 1);
-    clearAllBlocks();
+    if (!clearAllBlocks())
+        return
+
+    if(worldIndex == worlds.length - 1) worldIndex = 0
+    else worldIndex++
+    worldTypeSpan.textContent = worlds[worldIndex].name
+    worldTypeMinSpan.textContent = worlds[worldIndex].lower+1
+    worldTypeMaxSpan.textContent =  worlds[worldIndex].upper-1
+
+    changeYLevel(worlds[worldIndex].upper - 1);
 }
 setTimeout(() => {
-    const next = document.querySelector('.world-type-next');
+    const next = document.getElementById('world-type-next');
     if (next) next.addEventListener('click', nextWorld);
 }, 0);
 
@@ -174,18 +194,18 @@ const rotateRight = () => {
     });
 };
 setTimeout(() => {
-    const rotateLeftBtn = document.querySelector('.rotate-left');
-    const rotateRightBtn = document.querySelector('.rotate-right');
-    if (rotateLeftBtn) rotateLeftBtn.addEventListener('click', rotateLeft);
-    if (rotateRightBtn) rotateRightBtn.addEventListener('click', rotateRight);
+    const rotateLeftButton = document.getElementById('rotate-left');
+    const rotateRightButton = document.getElementById('rotate-right');
+    if (rotateLeftButton) rotateLeftButton.addEventListener('click', rotateLeft);
+    if (rotateRightButton) rotateRightButton.addEventListener('click', rotateRight);
 }, 0);
 
 
 //INPUT SYSTEM
 setTimeout(() => {
-    const searchSeedInput = document.querySelector('.search-seed');
-    const searchRadiusInput = document.querySelector('.search-radius');
-    const searchTilesInput = document.querySelector('.search-tiles');
+    const searchSeedInput = document.getElementById('search-seed');
+    const searchRadiusInput = document.getElementById('search-radius');
+    const searchTilesInput = document.getElementById('search-tiles');
 
     if (searchSeedInput) {
         searchSeedInput.value = searchSeed;
@@ -208,12 +228,12 @@ setTimeout(() => {
 }, 0);
 
 //BEST RADIUS LOGIC
-let bestRadiusSpan = document.querySelector(".best-radius");
+let bestRadiusSpan = document.getElementById("best-radius");
 const calculatebestRadius = () => {
     let p = 1;
     blocks.forEach(block => {
-        let _p = (block.y - worlds[worldI].lower) / (worlds[worldI].upper - worlds[worldI].lower)
-       if (worldI === 2)
+        let _p = (block.y - worlds[worldIndex].lower) / (worlds[worldIndex].upper - worlds[worldIndex].lower)
+       if (worldIndex === 2)
             p *= (block.type === 1 ? 1 - _p : _p)
         else 
             p *= (block.type === 0 ? 1 - _p : _p)
@@ -225,12 +245,12 @@ const calculatebestRadius = () => {
 
 // SEARCH AND CONSOLE LOGIC
 let socket = null;
-const consoleOutput = document.querySelector('.console-output');
-const progressSection = document.querySelector('.progress-section');
-const progressFill = document.querySelector('.progress-bar-fill');
-const progressText = document.querySelector('.progress-text');
-const searchBtn = document.querySelector('.search-btn');
-const stopBtn = document.querySelector('.stop-btn');
+const consoleOutput = document.getElementById('console-output');
+const progressSection = document.getElementById('progress-section');
+const progressFill = document.getElementById('progress-bar-fill');
+const progressText = document.getElementById('progress-text');
+const searchButton = document.getElementById('search-btn');
+const stopButton = document.getElementById('stop-btn');
 
 const resetProgress = () => {
     if (progressSection) progressSection.style.display = 'none';
@@ -269,24 +289,24 @@ const consoleLog = (message, type = 'normal') => {
     consoleOutput.scrollTop = consoleOutput.scrollHeight;
 };
 const disableControls = () => {
-    const controls = document.querySelectorAll('.bedrock, .not-bedrock, .air, .clear-all, .rotate-left, .rotate-right, .search-radius, .search-tiles');
+    const controls = document.querySelectorAll('#bedrock, #not-bedrock, #clear-all, #rotate-left, #rotate-right, #search-seed, #search-radius, #search-tiles, #world-type-next');
     controls.forEach(ctrl => ctrl.disabled = true);
     isSearching = true;
-    if (searchBtn) searchBtn.style.display = 'none';
-    if (stopBtn) stopBtn.style.display = 'block';
+    if (searchButton) searchButton.style.display = 'none';
+    if (stopButton) stopButton.style.display = 'block';
 };
 const enableControls = () => {
-    const controls = document.querySelectorAll('.bedrock, .not-bedrock, .air, .clear-all, .rotate-left, .rotate-right, .search-radius, .search-tiles');
+    const controls = document.querySelectorAll('#bedrock, #not-bedrock, #clear-all, #rotate-left, #rotate-right, #search-seed, #search-radius, #search-tiles, #world-type-next');
     controls.forEach(ctrl => ctrl.disabled = false);
     isSearching = false;
-    if (searchBtn) searchBtn.style.display = 'block';
-    if (stopBtn) stopBtn.style.display = 'none';
+    if (searchButton) searchButton.style.display = 'block';
+    if (stopButton) stopButton.style.display = 'none';
 };
 setTimeout(() => {
-    if (searchBtn) 
-        searchBtn.addEventListener('click', performSearch);
-    if (stopBtn) 
-        stopBtn.addEventListener('click', stopSearch);
+    if (searchButton) 
+        searchButton.addEventListener('click', performSearch);
+    if (stopButton) 
+        stopButton.addEventListener('click', stopSearch);
 }, 0);
 
 const connectSocket = () => {
@@ -340,7 +360,7 @@ const performSearch = () => {
         zMin: -searchRadius,
         zMax: searchRadius,
         tile: searchTiles,
-        worldType: worlds[worldI].name,
+        worldType: worlds[worldIndex].name,
         patterns: blocks.map((b) => {
             return {dx: b.x - blocks[0].x, y: b.y, dz: b.z - blocks[0].z, expected: b.type}
         }),
@@ -391,7 +411,7 @@ canvas.addEventListener('pointerup', (e) => {
         if (e.button === 0 && !isSearching) {
             if (block) 
                 block.type = currentBlockType;
-            else if (x < gridSize && z < gridSize && x >= -gridSize && z >= -gridSize)
+            else if (x < GRID_SIZE/2 && z < GRID_SIZE/2 && x >= -GRID_SIZE/2 && z >= -GRID_SIZE/2)
                 blocks.push(new Block(x, position.y, z, currentBlockType));
         } else if (e.button === 2 && !isSearching) 
             blocks = blocks.filter(b => !(b.x === x && b.y === position.y && b.z === z));
@@ -406,24 +426,20 @@ canvas.addEventListener('pointerup', (e) => {
 canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
     if (e.deltaY < 0)
-        scale *= zoomStrength;
+        scale *= ZOOM_STRENGTH;
     else
         if (scale > 20)
-            scale /= zoomStrength;
+            scale /= ZOOM_STRENGTH;
 })
 
 const drawGrid = () => {
-    for (let z = -gridSize; z < gridSize; z++) {
-        for (let x = -gridSize; x < gridSize; x++) {
+    for (let z = -GRID_SIZE/2; z < GRID_SIZE/2; z++) {
+        for (let x = -GRID_SIZE/2; x < GRID_SIZE/2; x++) {
             ctx.strokeStyle = "#888888";
             ctx.lineWidth = 1;
             ctx.strokeRect(x*scale + position.x, z*scale + position.z, scale, scale);
         }
     }   
-    
-    let opacity = Math.min(0.3*scale / 40, 0.33);
-    ctx.fillStyle = `rgba(0, 3, 15, ${1-opacity})`;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
 };
 
 const drawBlocks = (y) => {
@@ -443,17 +459,21 @@ const drawBlocks = (y) => {
     })
 };
 
-const step = (timestamp) => {
-    canvas.width = window.innerWidth - 400;
-    canvas.height = window.innerHeight;
+
+
+
+function step (timestamp) {
     ctx.canvas.width = window.innerWidth - 400; 
     ctx.canvas.height = window.innerHeight;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBlocks(position.y-1);
+    drawBlocks(position.y - 1);
     drawGrid();
+
+    ctx.fillStyle = `rgba(0, 3, 15, ${1 - Math.min(0.3*scale / 40, 0.33)})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     drawBlocks(position.y);
     requestAnimationFrame(step);        
 }
-
 requestAnimationFrame(step);

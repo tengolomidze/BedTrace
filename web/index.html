@@ -9,109 +9,112 @@
     </head>
 
     <body>
-        <canvas class="canvas"></canvas>
-        <div class="canvas-div">
-            <div class="instructions">
-                <strong>Controls:</strong><br>
-                Left Click: Place block<br>
-                Right Click: Remove block<br>
-                Drag: Move Screen<br>
-                Scroll: Zoom
+        <canvas id="canvas"></canvas>
+
+        <div id="canvas-div">
+            <div id="instructions">
+                <strong>Controls:</strong>
+                <p>Left Click: Place block</p>
+                <p>Right Click: Remove block</p>
+                <p>Drag: Move Screen</p>
+                <p>Scroll: Zoom</p>
             </div>
 
-            <div class="world-type-abs">
-                <div class="world-type-div">
-                    <p><span class="world-type">overworld_floor</span></p>
-                    <button class="world-type-next">Change</button> 
-                    <div class="world-type-min-max">
-                        <p>min:<span class="world-type-min">60</span></p>
-                        <p>max:<span class="world-type-max">60</span></p>
-                    </div>
+            <div id="world-type-div">
+                <div>
+                    <p style="width: 210px; font-size: 32px;" id="world-type">overworld_floor</p>
+                    <button id="world-type-next">Change</button> 
+                </div>
+                <div>
+                    <p>min:<span id="world-type-min">60</span></p>
+                    <p>max:<span id="world-type-max">60</span></p>
                 </div>
             </div>
 
-            <div class="compass-and-y-level-div"">
-                <div class="y-level-div">
-                    <button class="y-level-inc">+</button>
-                    <p>y: <span class="y-level">-60</span></p>
-                    <button class="y-level-dec">-</button>
+            <div id="best-radius-div">Enough to find one in <span id="best-radius" style="color: var(--accent); font-size: 24px; font-weight: 600;">0</span> block radius</div>
+
+            <div id="compass-and-y-level-div">
+                <div id="y-level-div">
+                    <button id="y-level-inc">+</button>
+                    <p>y: <span style="color: var(--accent); font-size: 24px; font-weight: 600;" id="y-level">-60</span></p>
+                    <button id="y-level-dec">-</button>
                 </div>
 
-                <div class="compass">
-                    <div>
-                        <div></div>
-                        <div style="color: rgb(166, 255, 158);">-Z</div>
-                        <div></div>
-                        <div style="color: rgb(255, 158, 158);">-X</div>
-                        <div></div>
-                        <div style="color: rgb(255, 158, 158);">+X</div>
-                        <div></div>
-                        <div style="color: rgb(166, 255, 158);">+Z</div>
-                        <div></div>
-                    </div>
+                <div id="compass">
+                    <div></div>
+                    <div style="color: rgb(166, 255, 158);">-Z</div>
+                    <div></div>
+                    <div style="color: rgb(255, 158, 158);">-X</div>
+                    <div></div>
+                    <div style="color: rgb(255, 158, 158);">+X</div>
+                    <div></div>
+                    <div style="color: rgb(166, 255, 158);">+Z</div>
+                    <div></div>
                 </div>
             </div>
-           
-
-            <div class="best-radius-div">Enough to find in <span class="best-radius" style="color:cadetblue; font-size: 24px; font-weight: 600;">0</span> block radius</div>
         </div>
 
-        <div class="panel">
-            <div class="tools">
-                <div class="block-picker">
-                    <button class="bedrock"><img src="img/bedrock.png"><p>1</p></button>
-                    <button class="not-bedrock"><img src="img/not_bedrock.png"><p>2</p></button>
+        <div id="panel">
+            <div id="block-picker-div">
+                <button id="bedrock"><img src="img/bedrock.png" draggable="false"><p>1</p></button>
+                <button id="not-bedrock"><img src="img/not_bedrock.png" draggable="false"><p>2</p></button>
+            </div>
+
+            <button id="clear-all">CLEAR ALL</button>
+
+            <div id="rotations-div">
+                <button id="rotate-left">↺</button>
+                <button id="rotate-right">↻</button>
+            </div>
+
+            <div id="search-inputs-div">
+                <div>
+                    <label>Seed</label>
+                    <input type="text" id="search-seed" value="0">
                 </div>
-                <button class="clear-all">Clear All</button>
-                <div class="rotations">
-                    <button class="rotate-left">↺</button>
-                    <button class="rotate-right">↻</button>
+                <div>
+                    <label>Search Radius</label>
+                    <input type="number" id="search-radius" value="1000000">
+                </div>
+                <div>
+                    <label>Tiles Size <span style="font-size: 8px;">(Chunk size in a single thread)</span></label>
+                    <input type="number" id="search-tiles" value="4096">
+                </div>
+                <div>
+                    <button id="search-btn">SEARCH</button>
+                    <button id="stop-btn" style="display: none;">STOP</button>
+                </div>
+            </div>
+
+            <div id="search-console-div">
+                <div id="console-header">Console</div>
+                <div id="progress-section" style="display: none;">
+                    <div id="progress-label">Progress</div>
+                    <div id="progress-bar-track">
+                        <div id="progress-bar-fill"></div>
+                    </div>
+                    <div id="progress-text">0%</div>
                 </div>
 
-                <div class="search-inputs">
-                    <div>
-                        <label>Seed</label>
-                        <input type="text" class="search-seed" value="0">
-                    </div>
-                    <div>
-                        <label>Search Radius</label>
-                        <input type="number" class="search-radius" value="1000000">
-                    </div>
-                    <div>
-                        <label>Tiles Size <span style="font-size: 8px;">(Chunk size in a single thread)</span></label>
-                        <input type="number" class="search-tiles" value="4096">
-                    </div>
-                    <div>
-                        <button class="search-btn">Search</button>
-                        <button class="stop-btn" style="display: none;">Stop</button>
-                    </div>
-                </div>
+                <div id="console-output"></div>
+            </div>
 
-                <div class="search-console">
-                    <div class="console-header">Console</div>
-                    <div class="progress-section" style="display: none;">
-                        <div class="progress-label">Progress</div>
-                        <div class="progress-bar-track">
-                            <div class="progress-bar-fill"></div>
-                        </div>
-                        <div class="progress-text">0%</div>
-                    </div>
-                    <div class="console-output"></div>
+            <div id="credentials">
+                <div>
+                    <span>Developer:</span>
+                    <span>Tengo Lomidze</span>
                 </div>
-
-                <div class="credentials">
-                    <div class="cred-item">
-                        <span class="cred-label">Developer:</span>
-                        <span class="cred-value">Tengo Lomidze</span>
-                    </div>
-                    <div class="cred-item">
-                        <span class="cred-label">Discord:</span>
-                        <span class="cred-value">#crig2181</span>
-                    </div>
-                    <div class="cred-item">
-                        <span class="cred-label">Mail:</span>
-                        <span class="cred-value">tengolomidzedev@gmail.com</span>
-                    </div>
+                <div>
+                    <span>Github:</span>
+                    <a href="https://github.com/tengolomidze/BedTrace">https://github.com/tengolomidze/BedTrace</a>
+                </div>
+                <div>
+                    <span>Discord:</span>
+                    <span>#crig2181</span>
+                </div>
+                <div>
+                    <span>E-mail:</span>
+                    <span>tengolomidzedev@gmail.com</span>
                 </div>
             </div>
         </div>
